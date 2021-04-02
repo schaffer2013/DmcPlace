@@ -10,7 +10,7 @@ def show_index():
 
 @app.route('/')
 def hello_world():
-  return 'Hi Lillian, I have a website! From, Phil'
+  return 'Hi Lillian, I have a website! from, Phil'
 
 if __name__ == '__main__':
   app.run()
