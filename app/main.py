@@ -7,10 +7,9 @@ from skimage.color import rgb2gray
 from skimage.filters import threshold_sauvola
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 FOLDER = os.path.join('static')
-
-app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = FOLDER
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -48,12 +47,22 @@ def show_gray_index():
 def posting():
     if request.method== 'POST':
       g.update(request.form['x'],request.form['y'],request.form['value'])
-      return "Posted!"
+      return "Posted."
     return "No post."
 
 @app.route('/')
 def hello_world():
-  return render_template("index.html", user_image = array_filename)
+  return render_template("index.html", user_image = 'static\\array.jpg')
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
 
 if __name__ == '__main__':
   app.run()

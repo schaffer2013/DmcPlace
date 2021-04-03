@@ -16,8 +16,9 @@ class Grid:
         print(self.array)
 
     def update(self, x, y, value):
-        for p in (p1 for p1 in self.array if p1.x==x and p1.y==y):
-            p.value=value
+        for p in (p1 for p1 in self.array if p1.x==int(x) and p1.y==int(y)):
+            p.value=((value=='True') or value)
+            break
         self.saveImage()
 
     def saveImage(self):
